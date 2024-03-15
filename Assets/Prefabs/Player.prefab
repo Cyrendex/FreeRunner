@@ -192,7 +192,7 @@ MonoBehaviour:
   wallRunSpeed: 8.5
   groundDrag: 6
   speedIncreaseMultiplier: 1.5
-  slopeIncreaseMultiplier: 2.5
+  slopeIncreaseMultiplier: 5
   jumpForce: 5
   jumpCooldown: 0.25
   airMultiplier: 0.4
@@ -214,7 +214,7 @@ MonoBehaviour:
   playerHeight: 2
   maxSlopeAngle: 60
   slideForce: 220
-  wallRunZTilt: 3
+  wallRunZTilt: 5
   sprintFOV: 90
   regularFOV: 80
   slideXTilt: 20
@@ -224,6 +224,7 @@ MonoBehaviour:
   stateText: {fileID: 0}
   orientation: {fileID: 981641767302104712}
   playerCam: {fileID: 0}
+  hitbox: {fileID: 8268360902914526314}
 --- !u!95 &5900075525765431116
 Animator:
   serializedVersion: 5

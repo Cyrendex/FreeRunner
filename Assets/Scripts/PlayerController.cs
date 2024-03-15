@@ -62,14 +62,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float slideForce;
     private RaycastHit slopeHit;
 
+
     [Header("Animation Settings")]
-    private Animator animator;
     [SerializeField] float wallRunZTilt;
     [SerializeField] float sprintFOV;
     [SerializeField] float regularFOV;
     [SerializeField] float slideXTilt;
     [SerializeField] float slideFOV;
     [SerializeField] float wallRunFOV;
+    private Animator animator;
 
     [Header("Miscellaneous")]
     public TMP_Text speedText;
@@ -146,13 +147,21 @@ public class PlayerController : MonoBehaviour
         if(lastState != state && state == PlayerState.wallrunning) // Wallrun enter
         {
             playerCam.ChangeFOV(wallRunFOV);
+            animator.SetBool("isWallrunning", true);
             if(isWallLeft)
+            {
                 playerCam.Tilt(zTilt: -wallRunZTilt);
+                animator.SetTrigger("wallrunningLeft");
+            }
             else
+            {
                 playerCam.Tilt(zTilt: wallRunZTilt);
+                animator.SetTrigger("wallrunningRight");
+            }
         }
         else if(lastState != state && lastState == PlayerState.wallrunning) // Wallrun exit
         {
+            animator.SetBool("isWallrunning", false);
             playerCam.ChangeFOV(regularFOV);
             playerCam.Tilt(zTilt: 0.0f);
         }
@@ -168,11 +177,13 @@ public class PlayerController : MonoBehaviour
         }
         else if(lastState != state && state == PlayerState.sliding) // Slide enter
         {
+            animator.SetBool("isSliding", true);
             playerCam.ChangeFOV(slideFOV);
             playerCam.Tilt(xTilt: slideXTilt);
         }
         else if(lastState != state && lastState == PlayerState.sliding) // Slide exit
         {
+            animator.SetBool("isSliding", false);
             playerCam.ChangeFOV(regularFOV);
             playerCam.Tilt(xTilt: 0);
         }
@@ -347,7 +358,8 @@ public class PlayerController : MonoBehaviour
     {
         // Reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
+        // Call animation trigger
+        animator.SetTrigger("jump");
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
